@@ -1,42 +1,55 @@
 module.exports = {
-    root: true,
+    ignorePatterns: ['dist', 'node_modules', 'bin'],
+
     env: {
-        node: true
+        browser: true,
+        es2021: true,
     },
-    extends: [ 'plugin:vue/essential', '@vue/airbnb' ],
+    extends: ['eslint:recommended', 'airbnb-base'],
+    parser: '@babel/eslint-parser',
+
     parserOptions: {
-        parser: 'babel-eslint'
+        ecmaVersion: 9,
+        sourceType: 'module',
     },
     settings: {
-        'import/resovler': {
+        'import/resolver': {
             webpack: {
-                config: './build/webpack.base.conf.js'
+                config: 'config/webpack.common.js',
             },
         },
     },
+
     rules: {
-        'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-        'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-        indent: [ 'error', 4 ],
+        indent: ['error', 4, { SwitchCase: 1 }],
         'linebreak-style': [0, 'error', 'windows'],
-        'no-restricted-syntax': 'off',
-        'no-unused-expressions': 'off',
-        'no-continue': 'off',
         'no-param-reassign': 'off',
-        'prefer-spread': 'off',
-        'no-use-before-define': 'off',
-        'array-callback-return': 'off',
-        'max-len': ['error', 160],
-        'no-nested-ternary': 'off',
-        'no-plusplus': 'off',
-        'arrow-parens': 'off',
-        'no-underscore-dangle': 'off',
-        'no-script-url': 'off',
-        'func-names': 'off',
+        'no-restricted-syntax': 'off',
+        'no-console': 'off',
+        'no-unused-expressions': 'off',
         'prefer-destructuring': 'off',
-        'prefer-const': 'off',
-        'no-await-in-loop': 'off',
-        'no-async-promise-executor': 'off',
+        'max-len': ['error', 160],
+        'arrow-parens': 'off',
+        'prefer-promise-reject-errors': 'off',
+        'import/no-extraneous-dependencies': 'off',
+        'no-underscore-dangle': 'off',
+        'global-require': 'off',
         'consistent-return': 'off',
-    }
+        'no-plusplus': 'off',
+        'no-magic-numbers': 'off',
+        'no-await-in-loop': 'off',
+        'prefer-const': 'off',
+        'no-nested-ternary': 'off',
+        'prefer-spread': 'off',
+        'no-continue': 'off',
+        'no-bitwise': 'off',
+        'vue/experimental-script-setup-vars': 'off',
+        'func-names': 'off',
+        'import/no-unresolved': 'off',
+        'import/no-named-as-default': 'off',
+        'import/no-named-as-default-member': 'off',
+        'no-use-before-define': 'off',
+        'no-useless-constructor': 'off',
+        'no-async-promise-executor': 'off',
+    },
 };
