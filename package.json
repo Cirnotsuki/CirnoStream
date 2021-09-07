@@ -1,8 +1,8 @@
 {
   "name": "cirnostream",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "A continually Task Control Module.",
-  "main": "./bin/index.js",
+  "main": "build/index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack serve --config config/webpack.dev.js",
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js",
@@ -15,9 +15,8 @@
   ],
   "author": "cirnotsuki",
   "license": "MIT",
-  "dependencies": {
-    "uuid": "^8.3.2"
-  },
+  "files": ["package.json","build"],
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/eslint-parser": "^7.15.4",

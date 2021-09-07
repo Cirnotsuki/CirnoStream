@@ -1,5 +1,5 @@
 module.exports = {
-    ignorePatterns: ['dist', 'node_modules', 'bin'],
+    ignorePatterns: ['dist', 'node_modules', 'build', 'lib/plugins'],
 
     env: {
         browser: true,
@@ -18,6 +18,10 @@ module.exports = {
                 config: 'config/webpack.common.js',
             },
         },
+    },
+
+    globals: {
+        msCrypto: true,
     },
 
     rules: {
