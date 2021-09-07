@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import CirnoStream from '../build';
+import CirnoStream from '../lib';
 
 const stream = new CirnoStream(500);
 
@@ -7,8 +7,9 @@ const monitor = document.getElementById('monitor');
 const root = document.getElementById('root');
 
 // this is a continually event for update Stream's infomation
+let timer = +new Date();
 stream.push(() => {
-    monitor.innerHTML = `StreamMonitor:\tDelay: ${stream.delay}ms\tRuntimes: ${stream.runTime}\tDuring ${stream.runTime * stream.delay}ms`;
+    monitor.innerHTML = `StreamMonitor:\tDelay: ${stream.delay}ms\tRuntimes: ${stream.runTime}\tDuring ${+new Date() - timer}ms`;
 }, 500, true);
 
 // function in list will be excuted one by one per 1000ms and remove automatically when all has been excuted.
@@ -41,7 +42,7 @@ setTimeout(() => {
             root.innerHTML += `<div>Runtime: ${stream.runTime} \tEventName: ${event.name} \tCreate after 3000ms Timeout, and repeat 3 times</div>`;
         },
         handler(event) {
-            root.innerHTML += `<div>Runtime: ${stream.runTime} \tEventName: ${event.name} \tExcute Delay: 2000ms \t RemainTimes: ${event.remainTimes - 1}</div>`;
+            root.innerHTML += `<div>Runtime: ${stream.runTime} \tEventName: ${event.name} \tExcute Delay: 2000ms \t RemainTimes: ${event.remain - 1}</div>`;
         },
         onclose(event) {
             root.innerHTML += `<div>Runtime: ${stream.runTime} \tEventName: ${event.name} \tAutoremove When all Excuted</div>`;
@@ -58,9 +59,14 @@ stream.push((event) => {
     event.freeze();
     // start the task that consuming massive time
     ComplexTask(() => {
-        root.innerHTML += `<div>Runtime: ${stream.runTime}\tConsuming 3000ms to complete this task, this event will not to be trigger until it has been done</div>`;
+        root.innerHTML += `<div>Runtime: ${stream.runTime}\tConsuming 3000ms to complete this task, this event will not to be trigger again until it has been done</div>`;
         // resume triggering event after task finished.
         event.release();
+        // you can manually stop this continually event;
+        if (event.runtime >= 5) {
+            event.close();
+            root.innerHTML += `<div>Runtime: ${stream.runTime}\tComplexTask Stop Manually after 5 times excuted</div>`;
+        }
     });
 }, 500, true);
 
