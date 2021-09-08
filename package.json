@@ -1,6 +1,6 @@
 {
   "name": "cirnostream",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A continually Task Control Module.",
   "main": "build/index.js",
   "scripts": {
