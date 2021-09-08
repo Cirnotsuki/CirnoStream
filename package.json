@@ -11,7 +11,8 @@
   "keywords": [
     "event stream",
     "event control",
-    "event flow"
+    "event flow",
+    "tasklist"
   ],
   "author": "cirnotsuki",
   "license": "MIT",

@@ -12,28 +12,28 @@ stream.push(() => {
     monitor.innerHTML = `StreamMonitor:\tDelay: ${stream.delay}ms\tRuntimes: ${stream.runTime}\tDuring ${+new Date() - timer}ms`;
 }, 500, true);
 
-// function in list will be excuted one by one per 1000ms and remove automatically when all has been excuted.
+// function in list will be executed one by one per 1000ms and remove automatically when all has been executed.
 stream.push([
     () => {
-        root.innerHTML += `<div>Runtime: ${stream.runTime} \tExcuted by EventList 01</div>`;
+        root.innerHTML += `<div>Runtime: ${stream.runTime} \tExecuted by EventList 01</div>`;
     },
     () => {
-        root.innerHTML += `<div>Runtime: ${stream.runTime} \tExcuted by EventList 02</div>`;
+        root.innerHTML += `<div>Runtime: ${stream.runTime} \tExecuted by EventList 02</div>`;
     },
     () => {
-        root.innerHTML += `<div>Runtime: ${stream.runTime} \tExcuted by EventList 03</div>`;
+        root.innerHTML += `<div>Runtime: ${stream.runTime} \tExecuted by EventList 03</div>`;
     },
 ]);
 
-// function will excute after 2000ms
+// function will execute after 2000ms
 stream.push({
     name: '2000 Delay Event',
     handler(event) {
-        root.innerHTML += `<div>Runtime: ${stream.runTime} \tEventName: ${event.name} \tExcute Delay: 2000ms</div>`;
+        root.innerHTML += `<div>Runtime: ${stream.runTime} \tEventName: ${event.name} \tExecute Delay: 2000ms</div>`;
     },
 }, 2000);
 
-// event will push into taskList after 3000ms timeout, and its handler will excute 3 times.
+// event will push into taskList after 3000ms timeout, and its handler will execute 3 times.
 setTimeout(() => {
     stream.push({
         name: 'Timeout',
@@ -42,10 +42,10 @@ setTimeout(() => {
             root.innerHTML += `<div>Runtime: ${stream.runTime} \tEventName: ${event.name} \tCreate after 3000ms Timeout, and repeat 3 times</div>`;
         },
         handler(event) {
-            root.innerHTML += `<div>Runtime: ${stream.runTime} \tEventName: ${event.name} \tExcute Delay: 2000ms \t RemainTimes: ${event.remain - 1}</div>`;
+            root.innerHTML += `<div>Runtime: ${stream.runTime} \tEventName: ${event.name} \tExecute Delay: 2000ms \t RemainTimes: ${event.remain - 1}</div>`;
         },
         onclose(event) {
-            root.innerHTML += `<div>Runtime: ${stream.runTime} \tEventName: ${event.name} \tAutoremove When all Excuted</div>`;
+            root.innerHTML += `<div>Runtime: ${stream.runTime} \tEventName: ${event.name} \tAutoremove When all Executed</div>`;
         },
     }, 2000);
 }, 3000);
@@ -65,7 +65,7 @@ stream.push((event) => {
         // you can manually stop this continually event;
         if (event.runtime >= 5) {
             event.close();
-            root.innerHTML += `<div>Runtime: ${stream.runTime}\tComplexTask Stop Manually after 5 times excuted</div>`;
+            root.innerHTML += `<div>Runtime: ${stream.runTime}\tComplexTask Stop Manually after 5 times executed</div>`;
         }
     });
 }, 500, true);
@@ -99,3 +99,32 @@ stream.push([
         div.style.top = '0px';
     },
 ], 500);
+
+// if eventList length less then repeat, it will repeat until remainTimes run out.
+stream.push({
+    repeat: 5,
+    eventList: [
+        () => {
+            root.innerHTML += `<div>Runtime: ${stream.runTime}\tEventList less then repeat, No.01</div>`;
+        },
+        () => {
+            root.innerHTML += `<div>Runtime: ${stream.runTime}\tEventList less then repeat, No.02</div>`;
+        },
+    ],
+});
+
+// if eventList length more then repeat, it will change the repeat number to fit the length.
+stream.push({
+    repeat: 1,
+    eventList: [
+        () => {
+            root.innerHTML += `<div>Runtime: ${stream.runTime}\tEventList more then repeat, No.03</div>`;
+        },
+        () => {
+            root.innerHTML += `<div>Runtime: ${stream.runTime}\tEventList more then repeat, No.04</div>`;
+        },
+        () => {
+            root.innerHTML += `<div>Runtime: ${stream.runTime}\tEventList more then repeat, No.05</div>`;
+        },
+    ],
+});
